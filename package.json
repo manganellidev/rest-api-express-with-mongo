@@ -1,0 +1,36 @@
+{
+  "name": "tag.com",
+  "version": "1.0.0",
+  "description": "Backend para aplicações de leituras",
+  "main": "app.js",
+  "scripts": {
+    "start": "npm run lint & node ./src/app.js",
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "test": "jest",
+    "debug": "nodemon --inspect ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tag-livros/wagner.manganelli.17.06.21.git"
+  },
+  "author": "Wagner Manganelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tag-livros/wagner.manganelli.17.06.21/issues"
+  },
+  "homepage": "https://github.com/tag-livros/wagner.manganelli.17.06.21#readme",
+  "dependencies": {
+    "express": "4.17.1",
+    "moment": "2.29.1",
+    "mongoose": "^5.12.14",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "jest": "^26.6.3"
+  }
+}

@@ -1,0 +1,234 @@
+paths:
+  /books:                
+    post:                 
+      tags:
+        - Book
+      summary: Creates a new book
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/book'
+            example:
+              title: 'Harry Portter'
+              isbn: '978-85-333-0400-5'
+              numberOfPages: 343
+              authors: [ 'Jarbas José', 'Maria Hub' ]
+              publisher: 'Royals'
+              synopsis: 'Very good for new readers/magicians. :)'
+              publishingDate: '20/01/2000'
+        required: true
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/book'
+              example:
+                title: 'Harry Portter'
+                isbn: '978-85-333-0400-5'
+                numberOfPages: 343
+                authors: [ 'Jarbas José', 'Maria Hub' ]
+                publisher: 'Royals'
+                synopsis: 'Very good for new readers/magicians. :)'
+                publishingDate: '20/01/2000'  
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/error'
+              example:
+                error: 'The request contains invalid values.'
+                errorDetail: "The title 'H@rry Potter' is not valid. The value must be alphanumeric, and it may has accent and/or space."          
+    get:                 
+      tags:
+        - Book
+      summary: Find books
+      produces:
+      - application/json
+      parameters:
+      - name: page
+        in: query
+        description: The target page.
+        required: false
+        type: integer
+      - name: limit
+        in: query
+        description: The limit of records per page.
+        required: false
+        type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/books'
+              example:
+                - title: 'Harry Portter'
+                  isbn: '978-85-333-0400-5'
+                  numberOfPages: 343
+                  authors: [ 'Jarbas José', 'Maria Hub' ]
+                  publisher: 'Royals'
+                  synopsis: 'Very good for new readers/magicians. :)'
+                  publishingDate: '20/01/2000'
+                - title: 'Harry Portter 2'
+                  isbn: '100-85-333-0400-5'
+                  numberOfPages: 450
+                  authors: [ 'Jarbas José', 'Maria Hub' ]
+                  publisher: 'Royals'
+                  synopsis: 'Very good for new readers/magicians. :)'
+                  publishingDate: '31/05/2002'
+  /books/{id}:   
+    get:                 
+      tags:
+        - Book
+      summary: Find a book by ID
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: The ID that identifies the book.
+        required: true
+        type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/book'
+              example:
+                title: 'Harry Portter'
+                isbn: '978-85-333-0400-5'
+                numberOfPages: 343
+                authors: [ 'Jarbas José', 'Maria Hub' ]
+                publisher: 'Royals'
+                synopsis: 'Very good for new readers/magicians. :)'
+                publishingDate: '20/01/2000'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/error'
+              example:
+                error: 'The requested resource cannot be found.'
+                errorDetail: "The book with id '123' cannot be found."
+    put:                 
+      tags:
+        - Book
+      summary: Updates a book
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: The ID that identifies the book.
+        required: true
+        type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/book'
+            example:
+              title: 'Harry Portter 2'
+              isbn: '978-85-333-0400-5'
+              numberOfPages: 343
+              authors: [ 'Jarbas José', 'Maria Hub' ]
+              publisher: 'Royals'
+              synopsis: 'Very good for new readers/magicians. :)'
+              publishingDate: '20/01/2000'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/book'
+              example:
+                title: 'Harry Portter 2'
+                isbn: '978-85-333-0400-5'
+                numberOfPages: 343
+                authors: [ 'Jarbas José', 'Maria Hub' ]
+                publisher: 'Royals'
+                synopsis: 'Very good for new readers/magicians. :)'
+                publishingDate: '20/01/2000'          
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/error'
+              example:
+                error: 'The request contains invalid values.'
+                errorDetail: "The title 'H@rry Potter' is not valid. The value must be alphanumeric, and it may has accent and/or space."
+        404:
+          description: Resource not found   
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/error'
+              example:
+                error: 'The requested resource cannot be found.'
+                errorDetail: "The book with id '123' cannot be found."                           
+    delete:                 
+      tags:
+        - Book
+      summary: Deletes a book
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: The ID that identifies the book.
+        required: true
+        type: string
+      responses:
+        200:
+          description: OK
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/error'
+              example:
+                error: 'The requested resource cannot be found.'
+                errorDetail: "The book with id '123' cannot be found."          
+definitions:
+  book:
+    type: object
+    properties:
+      title:
+        type: string
+      isbn:
+        type: string
+      numberOfPages:
+        type: integer
+      authors:
+        type: string
+      publisher:
+        type: string
+      synopsis:
+        type: string
+      publishingDate:
+        type: date
+  books:
+    type: array
+    items:
+      $ref: '#/definitions/book'
+  error:
+    type: object
+    properties:
+      error:
+        type: string
+      errorDetail:
+        type: string

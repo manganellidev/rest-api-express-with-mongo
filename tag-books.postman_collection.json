@@ -1,0 +1,590 @@
+{
+	"info": {
+		"_postman_id": "e386cf1e-0ea9-4f1e-8c31-f68cef08006c",
+		"name": "tag-books",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Success Requests",
+			"item": [
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"    const response = pm.response.json();",
+									"    const { id } = response;",
+									"    pm.environment.set(\"bookId\", id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/book/{{bookId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter UPDATED\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 455,\n    \"authors\": [\n        \"Jarbas Feirrr\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"30/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/{{bookId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pm.environment.unset(\"bookId\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/book/{{bookId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Failure Requests",
+			"item": [
+				{
+					"name": "CREATE w/ invalid TITLE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"H@rry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE w/ invalid ISBN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-A\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE w/ invalid NUM OF PAGES",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": \"0\",\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE w/ invalid AUTHORS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub 123 @#\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE w/ invalid PUBLISHER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"RoyalsRoyalsRoyalsRoyalsRoyalsRoyalsRoyalsRoyalsRoyalsRoyals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE w/ invalid SYNOPSIS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.Veryyyy goood for new readers.\",\n    \"publishingDate\": \"20/01/2000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE w/ invalid PUBLISHING DATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"isbn\": \"978-85-333-0400-5\",\n    \"numberOfPages\": 343,\n    \"authors\": [\n        \"Jarbas José\",\n        \"Maria Hub\"\n    ],\n    \"publisher\": \"Royals\",\n    \"synopsis\": \"Veryyyy goood for new readers.\",\n    \"publishingDate\": \"31/12/1999\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE w/ invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/book/invalid-ID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"invalid-ID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET by ID w/ invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/book/invalid-ID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"invalid-ID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE w/ invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/book/invalid-ID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"invalid-ID"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
